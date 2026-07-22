@@ -2,7 +2,7 @@
 
 A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data harmonization and preprocessing**.
 
-The live public-data pathway links to [GEO2COMPASS](https://geo2compass.precsn.com/). RAW2COMPASS is presented as future downloadable standalone software, with its download control intentionally disabled and marked **Coming Soon**.
+The live public-data pathway links to [GEO-2-COMPASS](https://geo2compass.precsn.com/). RAW-2-COMPASS is presented as future downloadable standalone software, with its download control intentionally disabled and marked **Coming Soon**.
 
 ## Included
 
@@ -38,7 +38,7 @@ No secrets or environment variables are required for this landing page.
 
 ## Update later
 
-When RAW2COMPASS is ready, replace the disabled button in `app.py` with a download link to the signed installer or release page. Keep installers outside the repository if they are large; a versioned release or object-storage URL is easier to maintain.
+When RAW-2-COMPASS is ready, replace the disabled button in `app.py` with a download link to the signed installer or release page. Keep installers outside the repository if they are large; a versioned release or object-storage URL is easier to maintain.
 
 ## Background asset
 

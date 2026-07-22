@@ -668,7 +668,7 @@ st.html(
             <div class="nav-links">
                 <a href="#pathways">Pathways</a>
                 <a href="#workflow">How it works</a>
-                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO2COMPASS ↗</a>
+                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO-2-COMPASS ↗</a>
             </div>
         </nav>
 
@@ -704,35 +704,35 @@ st.html(
             <div class="path-grid">
                 <article class="path-card live">
                     <div class="card-status">Available now</div>
-                    <h3>GEO2COMPASS</h3>
+                    <h3>GEO-2-COMPASS</h3>
                     <div class="path-label">Public datasets · Web application</div>
                     <p>
                         Convert Gene Expression Omnibus studies into harmonized expression matrices and metadata prepared for downstream COMPASS analysis.
                     </p>
-                    <div class="mini-list" aria-label="GEO2COMPASS capabilities">
+                    <div class="mini-list" aria-label="GEO-2-COMPASS capabilities">
                         <span>GEO accession input</span>
                         <span>Probe mapping</span>
                         <span>Annotation harmonization</span>
                     </div>
                     <a class="card-action" href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">
-                        Launch GEO2COMPASS&nbsp; ↗
+                        Launch GEO-2-COMPASS&nbsp; ↗
                     </a>
                 </article>
 
                 <article class="path-card soon">
                     <div class="card-status coming">Coming soon</div>
-                    <h3>RAW2COMPASS</h3>
+                    <h3>RAW-2-COMPASS</h3>
                     <div class="path-label">Custom datasets · Standalone software</div>
                     <p>
                         Future downloadable software for preparing your own raw sequencing outputs locally and producing standardized COMPASS-ready files.
                     </p>
-                    <div class="mini-list" aria-label="Planned RAW2COMPASS formats">
+                    <div class="mini-list" aria-label="Planned RAW-2-COMPASS formats">
                         <span>Raw count files</span>
                         <span>FASTQ / SRA</span>
                         <span>Common RNA-seq outputs</span>
                     </div>
-                    <button class="disabled-action" type="button" disabled aria-disabled="true" title="RAW2COMPASS is coming soon">
-                        Download RAW2COMPASS <small>Coming soon</small>
+                    <button class="disabled-action" type="button" disabled aria-disabled="true" title="RAW-2-COMPASS is coming soon">
+                        Download RAW-2-COMPASS <small>Coming soon</small>
                     </button>
                 </article>
             </div>
@@ -789,7 +789,7 @@ st.html(
             <div><span class="footer-brand">COMPASS Prep™</span> · Data harmonization and preprocessing</div>
             <div class="footer-links">
                 <a href="#top">Back to top</a>
-                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO2COMPASS ↗</a>
+                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>
             </div>
         </footer>
     </main>

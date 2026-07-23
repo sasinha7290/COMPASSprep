@@ -668,7 +668,7 @@ st.html(
             <div class="nav-links">
                 <a href="#pathways">Pathways</a>
                 <a href="#workflow">How it works</a>
-                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO-2-COMPASS ↗</a>
+                <a href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO-2-COMPASS ↗</a>
             </div>
         </nav>
 
@@ -681,7 +681,7 @@ st.html(
                     Transform public transcriptomic datasets—or, soon, your own raw sequencing outputs—into standardized, COMPASS-ready inputs through clear and reproducible workflows.
                 </p>
                 <div class="hero-actions">
-                    <a class="primary-link" href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">
+                    <a class="primary-link" href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">
                         Start with public data <span aria-hidden="true">→</span>
                     </a>
                     <a class="quiet-link" href="#pathways">Explore both pathways</a>
@@ -714,7 +714,7 @@ st.html(
                         <span>Probe mapping</span>
                         <span>Annotation harmonization</span>
                     </div>
-                    <a class="card-action" href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">
+                    <a class="card-action" href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">
                         Launch GEO-2-COMPASS&nbsp; ↗
                     </a>
                 </article>
@@ -789,7 +789,7 @@ st.html(
             <div><span class="footer-brand">COMPASS Prep™</span> · Data harmonization and preprocessing</div>
             <div class="footer-links">
                 <a href="#top">Back to top</a>
-                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>
+                <a href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>
             </div>
         </footer>
     </main>

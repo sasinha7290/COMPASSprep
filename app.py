@@ -16,6 +16,7 @@ import streamlit as st
 
 APP_DIR = Path(__file__).resolve().parent
 BACKGROUND_PATH = APP_DIR / "assets" / "compass-prep-background-4k.webp"
+COMPASS_LOGO_PATH = APP_DIR / "assets" / "compass-logo.png"
 RAW_ARCHIVE_NAME = "RAW2Compass-macos-arm64.zip"
 RAW_ARCHIVE_PATH = APP_DIR / "static" / RAW_ARCHIVE_NAME
 RAW_ARCHIVE_URL = f"/app/static/{RAW_ARCHIVE_NAME}"
@@ -40,6 +41,7 @@ st.set_page_config(
 )
 
 background_uri = asset_data_uri(BACKGROUND_PATH, "image/webp")
+compass_logo_uri = asset_data_uri(COMPASS_LOGO_PATH, "image/png")
 if EXTERNAL_RAW_URL and not EXTERNAL_RAW_URL.startswith("https://"):
     st.error("RAW2COMPASS_DOWNLOAD_URL must be an HTTPS URL.")
     st.stop()
@@ -140,35 +142,12 @@ st.html(
             text-decoration: none;
         }}
 
-        .brand-mark {{
-            position: relative;
-            width: 36px;
-            height: 36px;
-            border: 2px solid rgba(22, 119, 200, 0.45);
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.82);
-            box-shadow: 0 5px 18px rgba(22, 119, 200, 0.11);
-        }}
-
-        .brand-mark::before {{
-            content: "";
-            position: absolute;
-            top: 5px;
-            left: 14px;
-            width: 7px;
-            height: 22px;
-            border-radius: 8px 8px 2px 2px;
-            background: linear-gradient(180deg, var(--gold) 0 48%, var(--blue) 48% 100%);
-            transform: rotate(38deg);
-            transform-origin: center;
-        }}
-
-        .brand-mark::after {{
-            content: "";
-            position: absolute;
-            inset: 13px;
-            border-radius: 50%;
-            background: white;
+        .brand-logo {{
+            display: block;
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            flex: 0 0 auto;
         }}
 
         .nav-links {{
@@ -498,19 +477,6 @@ st.html(
             line-height: 1.5;
         }}
 
-        .helper-line {{
-            margin: 28px 0 0;
-            padding: 18px 22px;
-            border-left: 3px solid var(--gold);
-            border-radius: 10px;
-            background: #eaf6f7;
-            color: #24445f;
-            font-size: 14px;
-            line-height: 1.6;
-        }}
-
-        .helper-line a {{ color: #0d649c; font-weight: 750; }}
-
         .path-details {{
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -686,9 +652,7 @@ st.html(
             .site-nav {{ height: 70px; width: calc(100% - 32px); }}
             .nav-links {{ display: none; }}
             .brand {{ font-size: 15px; }}
-            .brand-mark {{ width: 32px; height: 32px; }}
-            .brand-mark::before {{ top: 4px; left: 12px; }}
-            .brand-mark::after {{ inset: 11px; }}
+            .brand-logo {{ width: 42px; height: 42px; }}
             .hero {{
                 min-height: 700px;
                 padding: 116px 20px 58px;
@@ -720,7 +684,7 @@ st.html(
     <main class="compass-page" id="top">
         <nav class="site-nav" aria-label="Primary navigation">
             <a class="brand" href="#top" aria-label="COMPASS Prep home">
-                <span class="brand-mark" aria-hidden="true"></span>
+                <img class="brand-logo" src="{compass_logo_uri}" alt="" aria-hidden="true">
                 <span>COMPASS Prep</span>
             </a>
             <div class="nav-links">
@@ -732,7 +696,7 @@ st.html(
 
         <header class="hero">
             <div class="hero-copy">
-                <p class="eyebrow">Data harmonization &amp; preprocessing</p>
+                <p class="eyebrow">Data preparation for COMPASS</p>
                 <h1>COMPASS Prep<sup>™</sup></h1>
                 <p class="hero-tagline">Coding-free preprocessing for deterministic biology.</p>
                 <p class="hero-body">
@@ -746,7 +710,7 @@ st.html(
                 </div>
                 <div class="trust-row" aria-label="Platform benefits">
                     <span>Coding-free</span>
-                    <span>Standardized outputs</span>
+                    <span>COMPASS-ready export</span>
                     <span>Reproducible workflow</span>
                 </div>
             </div>
@@ -765,7 +729,7 @@ st.html(
                     <h3>GEO-2-COMPASS</h3>
                     <div class="path-label">Public datasets · Web application</div>
                     <p>
-                        Start with a GEO Series accession to retrieve study and sample metadata, build an expression matrix, and prepare a compatible input for downstream COMPASS analysis.
+                        Enter a public GEO Series accession to retrieve study and sample details. GEO-2-COMPASS builds an expression matrix, lets you inspect it, and exports a file for COMPASS analysis.
                     </p>
                     <div class="mini-list" aria-label="GEO-2-COMPASS capabilities">
                         <span>RNA-seq &amp; microarray studies</span>
@@ -794,12 +758,10 @@ st.html(
                 </article>
             </div>
 
-            <p class="helper-line">Don’t have a COMPASS-ready dataframe? Use <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">COMPASS Prep™</a> to convert and harmonize public GEO datasets into a compatible format.</p>
-
             <div class="path-details" aria-label="Detailed pathway descriptions">
                 <article class="detail-card">
                     <h3>What GEO-2-COMPASS does</h3>
-                    <p>Use this route when your study is already deposited in NCBI GEO. The web app reads a GSE accession, shows the study context, and lets you select a GPL platform when the study uses more than one.</p>
+                    <p>GEO-2-COMPASS turns a public NCBI GEO study into an expression matrix that you can bring into COMPASS. Enter a GSE accession to see the study and sample details, then choose a GPL platform if the study includes more than one.</p>
                     <ol>
                         <li>Retrieve GEO study and sample metadata and identify available RNA-seq or microarray expression data.</li>
                         <li>Build an expression matrix from available count or supplementary files. Map probe or gene identifiers to symbols when usable annotations are available.</li>
@@ -823,7 +785,7 @@ st.html(
 
         <section class="workflow-wrap" id="workflow">
             <div class="workflow-top">
-                <h2>From dataset to a consistent COMPASS-ready input.</h2>
+                <h2>From dataset to a COMPASS-ready input.</h2>
                 <p>COMPASS Prep makes the transformation explicit, traceable, and approachable—without requiring a custom preprocessing script.</p>
             </div>
             <div class="workflow">
@@ -834,8 +796,8 @@ st.html(
                 </article>
                 <article class="step">
                     <div class="step-number">02 · PREPARE</div>
-                    <h3>Harmonize the inputs</h3>
-                    <p>Standardize identifiers, annotations, sample context, and expression values through a defined workflow.</p>
+                    <h3>Prepare the expression matrix</h3>
+                    <p>Review the available expression data, sample context, and preparation options before export.</p>
                 </article>
                 <article class="step">
                     <div class="step-number">03 · CONTINUE</div>
@@ -850,8 +812,8 @@ st.html(
             <h2 class="section-title" id="principles-title">A dependable front door to the COMPASS ecosystem.</h2>
             <div class="principles">
                 <div class="principle">
-                    <strong>Standardized</strong>
-                    <span>Consistent outputs across supported data sources.</span>
+                    <strong>COMPASS-ready</strong>
+                    <span>Prepared files for the next stage of analysis.</span>
                 </div>
                 <div class="principle">
                     <strong>Deterministic</strong>
@@ -869,7 +831,7 @@ st.html(
         </section>
 
         <footer class="site-footer">
-            <div><span class="footer-brand">COMPASS Prep™</span> · Data harmonization and preprocessing</div>
+            <div><span class="footer-brand">COMPASS Prep™</span> · Data preparation for COMPASS</div>
             <div class="footer-links">
                 <a href="#top">Back to top</a>
                 <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>

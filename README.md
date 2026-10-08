@@ -1,11 +1,11 @@
 # COMPASS Prep™ landing page
 
-A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data harmonization and preprocessing**.
+A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data preparation for COMPASS**.
 
 - **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
 - **RAW-2-COMPASS:** downloadable standalone application for macOS on Apple silicon. The landing page links to the GitHub Release asset; a local copy of the ZIP is served directly when present.
 
-The page describes both routes in detail and includes the COMPASS website helper line.
+The page describes both routes in detail and uses the COMPASS icon in its header.
 
 ## Files
 
@@ -13,6 +13,7 @@ The page describes both routes in detail and includes the COMPASS website helper
 - `static/RAW2Compass-macos-arm64.zip` — supplied desktop app archive, 144.5 MiB
 - `assets/compass-prep-background-4k.webp` — optimized 4K website background
 - `assets/compass-prep-background-4k.png` — full-quality 4K background
+- `assets/compass-logo.png` — COMPASS icon used in the header
 - `.streamlit/config.toml` — Streamlit theme and static-file serving
 - `railway.json`, `Procfile`, `runtime.txt`, `requirements.txt` — Railway deployment files
 

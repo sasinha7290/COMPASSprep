@@ -7,6 +7,8 @@ Run locally with:
 from __future__ import annotations
 
 import base64
+import os
+from html import escape
 from pathlib import Path
 
 import streamlit as st
@@ -14,6 +16,10 @@ import streamlit as st
 
 APP_DIR = Path(__file__).resolve().parent
 BACKGROUND_PATH = APP_DIR / "assets" / "compass-prep-background-4k.webp"
+RAW_ARCHIVE_NAME = "RAW2Compass-macos-arm64.zip"
+RAW_ARCHIVE_PATH = APP_DIR / "static" / RAW_ARCHIVE_NAME
+RAW_ARCHIVE_URL = f"/app/static/{RAW_ARCHIVE_NAME}"
+EXTERNAL_RAW_URL = os.getenv("RAW2COMPASS_DOWNLOAD_URL", "").strip()
 
 
 def asset_data_uri(path: Path, mime_type: str) -> str:
@@ -30,6 +36,23 @@ st.set_page_config(
 )
 
 background_uri = asset_data_uri(BACKGROUND_PATH, "image/webp")
+if EXTERNAL_RAW_URL and not EXTERNAL_RAW_URL.startswith("https://"):
+    st.error("RAW2COMPASS_DOWNLOAD_URL must be an HTTPS URL.")
+    st.stop()
+if not EXTERNAL_RAW_URL and not RAW_ARCHIVE_PATH.is_file():
+    st.error(f"The RAW-2-COMPASS download is missing: {RAW_ARCHIVE_NAME}")
+    st.stop()
+raw_download_url = escape(EXTERNAL_RAW_URL or RAW_ARCHIVE_URL, quote=True)
+raw_download_attributes = (
+    'target="_blank" rel="noopener noreferrer"'
+    if EXTERNAL_RAW_URL
+    else f'download="{RAW_ARCHIVE_NAME}"'
+)
+raw_archive_size_mib = (
+    RAW_ARCHIVE_PATH.stat().st_size / (1024 * 1024)
+    if RAW_ARCHIVE_PATH.is_file()
+    else 144.5
+)
 
 st.html(
     f"""
@@ -361,7 +384,7 @@ st.html(
                 white;
         }}
 
-        .path-card.soon {{
+        .path-card.raw {{
             background:
                 radial-gradient(circle at 94% 8%, rgba(216,154,43,.14), transparent 31%),
                 linear-gradient(135deg, #ffffff, #fbfcfc);
@@ -391,12 +414,12 @@ st.html(
             box-shadow: 0 0 0 4px rgba(21,159,154,.12);
         }}
 
-        .card-status.coming {{
+        .card-status.download {{
             color: #8b621a;
             background: #fcf4e5;
         }}
 
-        .card-status.coming::before {{
+        .card-status.download::before {{
             background: var(--gold);
             box-shadow: 0 0 0 4px rgba(216,154,43,.12);
         }}
@@ -463,29 +486,57 @@ st.html(
             background: var(--blue);
         }}
 
-        .disabled-action {{
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 46px;
-            padding: 0 18px;
-            border: 1px solid #dbe2e7;
-            border-radius: 8px;
-            color: #8795a2;
-            background: #edf1f3;
-            font-size: 13px;
-            font-weight: 750;
-            cursor: not-allowed;
+        .download-note {{
+            display: block;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
         }}
 
-        .disabled-action small {{
-            margin-left: 9px;
-            padding-left: 9px;
-            border-left: 1px solid #cfd8de;
-            font-size: 10px;
-            letter-spacing: .07em;
-            text-transform: uppercase;
+        .helper-line {{
+            margin: 28px 0 0;
+            padding: 18px 22px;
+            border-left: 3px solid var(--gold);
+            border-radius: 10px;
+            background: #eaf6f7;
+            color: #24445f;
+            font-size: 14px;
+            line-height: 1.6;
         }}
+
+        .helper-line a {{ color: #0d649c; font-weight: 750; }}
+
+        .path-details {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+            margin-top: 28px;
+        }}
+
+        .detail-card {{
+            padding: 28px 30px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: #f9fcfd;
+        }}
+
+        .detail-card h3 {{
+            margin: 0 0 13px;
+            color: var(--navy);
+            font-size: 19px;
+        }}
+
+        .detail-card p, .detail-card li {{
+            color: #4e6578;
+            font-size: 14px;
+            line-height: 1.65;
+        }}
+
+        .detail-card p {{ margin: 0 0 13px; }}
+        .detail-card ol, .detail-card ul {{ margin: 0; padding-left: 20px; }}
+        .detail-card li + li {{ margin-top: 7px; }}
+        .detail-card li::marker {{ color: var(--teal); font-weight: 700; }}
 
         .workflow-wrap {{
             padding: 78px max(32px, calc((100vw - 1180px) / 2));
@@ -622,12 +673,14 @@ st.html(
             }}
             .hero-copy {{ width: min(610px, 88vw); }}
             .path-grid {{ grid-template-columns: 1fr; }}
+            .path-details {{ grid-template-columns: 1fr; }}
             .workflow-top {{ align-items: start; flex-direction: column; }}
             .principles {{ grid-template-columns: repeat(2, 1fr); }}
         }}
 
         @media (max-width: 620px) {{
             .site-nav {{ height: 70px; width: calc(100% - 32px); }}
+            .nav-links {{ display: none; }}
             .brand {{ font-size: 15px; }}
             .brand-mark {{ width: 32px; height: 32px; }}
             .brand-mark::before {{ top: 4px; left: 12px; }}
@@ -645,6 +698,7 @@ st.html(
             .hero-actions {{ align-items: flex-start; flex-direction: column; gap: 16px; }}
             .section {{ width: calc(100% - 40px); padding: 62px 0; }}
             .path-card {{ padding: 27px; }}
+            .detail-card {{ padding: 24px; }}
             .workflow-wrap {{ padding: 62px 20px; }}
             .workflow {{ grid-template-columns: 1fr; }}
             .step {{ min-height: auto; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.14); }}
@@ -668,7 +722,7 @@ st.html(
             <div class="nav-links">
                 <a href="#pathways">Pathways</a>
                 <a href="#workflow">How it works</a>
-                <a href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO-2-COMPASS ↗</a>
+                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">Launch GEO-2-COMPASS ↗</a>
             </div>
         </nav>
 
@@ -678,10 +732,10 @@ st.html(
                 <h1>COMPASS Prep<sup>™</sup></h1>
                 <p class="hero-tagline">Coding-free preprocessing for deterministic biology.</p>
                 <p class="hero-body">
-                    Transform public transcriptomic datasets—or, soon, your own raw sequencing outputs—into standardized, COMPASS-ready inputs through clear and reproducible workflows.
+                    Prepare public GEO expression studies with the web app, or download RAW-2-COMPASS to work with your own data locally. Choose the route that matches your starting data.
                 </p>
                 <div class="hero-actions">
-                    <a class="primary-link" href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">
+                    <a class="primary-link" href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">
                         Start with public data <span aria-hidden="true">→</span>
                     </a>
                     <a class="quiet-link" href="#pathways">Explore both pathways</a>
@@ -698,7 +752,7 @@ st.html(
             <p class="section-kicker">Choose your starting point</p>
             <h2 class="section-title">One preparation layer. Two routes into COMPASS.</h2>
             <p class="section-lede">
-                Use the live web workflow for public GEO studies today. A downloadable application for processing custom datasets locally is in development.
+                GEO-2-COMPASS is a web workflow for public datasets. RAW-2-COMPASS is a downloadable desktop application for custom data; the current package is for macOS on Apple silicon.
             </p>
 
             <div class="path-grid">
@@ -707,33 +761,58 @@ st.html(
                     <h3>GEO-2-COMPASS</h3>
                     <div class="path-label">Public datasets · Web application</div>
                     <p>
-                        Convert Gene Expression Omnibus studies into harmonized expression matrices and metadata prepared for downstream COMPASS analysis.
+                        Start with a GEO Series accession to retrieve study and sample metadata, build an expression matrix, and prepare a compatible input for downstream COMPASS analysis.
                     </p>
                     <div class="mini-list" aria-label="GEO-2-COMPASS capabilities">
-                        <span>GEO accession input</span>
-                        <span>Probe mapping</span>
-                        <span>Annotation harmonization</span>
+                        <span>RNA-seq &amp; microarray studies</span>
+                        <span>Platform selection</span>
+                        <span>Compressed matrix export</span>
                     </div>
-                    <a class="card-action" href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">
+                    <a class="card-action" href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">
                         Launch GEO-2-COMPASS&nbsp; ↗
                     </a>
                 </article>
 
-                <article class="path-card soon">
-                    <div class="card-status coming">Coming soon</div>
+                <article class="path-card raw" id="raw-download">
+                    <div class="card-status download">Download available</div>
                     <h3>RAW-2-COMPASS</h3>
-                    <div class="path-label">Custom datasets · Standalone software</div>
+                    <div class="path-label">Your data · Standalone desktop app</div>
                     <p>
-                        Future downloadable software for preparing your own raw sequencing outputs locally and producing standardized COMPASS-ready files.
+                        Work with your own data in a local desktop application designed to prepare inputs for COMPASS. Download the Apple silicon macOS build as a ZIP archive containing RAW2Compass.app.
                     </p>
-                    <div class="mini-list" aria-label="Planned RAW-2-COMPASS formats">
-                        <span>Raw count files</span>
-                        <span>FASTQ / SRA</span>
-                        <span>Common RNA-seq outputs</span>
+                    <div class="mini-list" aria-label="RAW-2-COMPASS download details">
+                        <span>macOS Apple silicon</span>
+                        <span>Local desktop workflow</span>
+                        <span>{raw_archive_size_mib:.1f} MiB ZIP</span>
                     </div>
-                    <button class="disabled-action" type="button" disabled aria-disabled="true" title="RAW-2-COMPASS is coming soon">
-                        Download RAW-2-COMPASS <small>Coming soon</small>
-                    </button>
+                    <a class="card-action" href="{raw_download_url}" {raw_download_attributes} type="application/zip">Download RAW-2-COMPASS ↓</a>
+                    <small class="download-note">The ZIP contains a macOS arm64 app. Windows and Intel Mac builds are not included.</small>
+                </article>
+            </div>
+
+            <p class="helper-line">Don’t have a COMPASS-ready dataframe? Use <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">COMPASS Prep™</a> to convert and harmonize public GEO datasets into a compatible format.</p>
+
+            <div class="path-details" aria-label="Detailed pathway descriptions">
+                <article class="detail-card">
+                    <h3>What GEO-2-COMPASS does</h3>
+                    <p>Use this route when your study is already deposited in NCBI GEO. The web app reads a GSE accession, shows the study context, and lets you select a GPL platform when the study uses more than one.</p>
+                    <ol>
+                        <li>Retrieve GEO study and sample metadata and identify available RNA-seq or microarray expression data.</li>
+                        <li>Build an expression matrix from available count or supplementary files. Map probe or gene identifiers to symbols when usable annotations are available.</li>
+                        <li>Optionally annotate sample columns, apply log, CPM, or log-CPM transformations, and prepare survival metadata where the source record supports it.</li>
+                        <li>Preview the result and download the complete matrix as a compressed tab-separated file for use with COMPASS.</li>
+                    </ol>
+                    <p>Some GEO records have unusual files or exceed hosted processing limits; the web app reports when it cannot build a usable matrix.</p>
+                </article>
+                <article class="detail-card">
+                    <h3>What RAW-2-COMPASS provides</h3>
+                    <p>Use this route for your own datasets rather than a public GEO accession. It is a separate desktop application, so the landing page does not upload or process your files.</p>
+                    <ol>
+                        <li>Download the {raw_archive_size_mib:.1f} MiB ZIP on a Mac with Apple silicon and extract <strong>RAW2Compass.app</strong>.</li>
+                        <li>Open the local application and follow its on-screen workflow to prepare your data for COMPASS.</li>
+                        <li>Save the prepared output locally, then use the compatible data in your COMPASS analysis.</li>
+                    </ol>
+                    <p>This package contains only the macOS arm64 build. Input formats and processing options should be checked in the installed application before use; the archive does not include a user guide.</p>
                 </article>
             </div>
         </section>
@@ -747,7 +826,7 @@ st.html(
                 <article class="step">
                     <div class="step-number">01 · SELECT</div>
                     <h3>Choose your data source</h3>
-                    <p>Start with a public GEO accession today, or use your own dataset when the standalone application becomes available.</p>
+                    <p>Enter a public GEO accession in the web app, or download the standalone RAW-2-COMPASS application for your own data.</p>
                 </article>
                 <article class="step">
                     <div class="step-number">02 · PREPARE</div>
@@ -789,7 +868,7 @@ st.html(
             <div><span class="footer-brand">COMPASS Prep™</span> · Data harmonization and preprocessing</div>
             <div class="footer-links">
                 <a href="#top">Back to top</a>
-                <a href="https://geo-2-compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>
+                <a href="https://geo2compass.precsn.com/" target="_blank" rel="noopener noreferrer">GEO-2-COMPASS ↗</a>
             </div>
         </footer>
     </main>

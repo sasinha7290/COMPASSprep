@@ -1,7 +1,7 @@
 {
   "$schema": "https://railway.com/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "RAILPACK"
   },
   "deploy": {
     "startCommand": "streamlit run app.py --server.address 0.0.0.0 --server.port $PORT --server.headless true",
@@ -11,4 +11,3 @@
     "restartPolicyMaxRetries": 3
   }
 }
-

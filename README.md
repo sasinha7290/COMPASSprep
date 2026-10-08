@@ -3,7 +3,7 @@
 A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data harmonization and preprocessing**.
 
 - **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
-- **RAW-2-COMPASS:** downloadable standalone application for macOS on Apple silicon. The supplied `RAW2Compass-macos-arm64.zip` is served directly from the landing page.
+- **RAW-2-COMPASS:** downloadable standalone application for macOS on Apple silicon. The landing page links to the GitHub Release asset; a local copy of the ZIP is served directly when present.
 
 The page describes both routes in detail and includes the COMPASS website helper line.
 
@@ -27,7 +27,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Open the printed local URL. The RAW download link is served at `/app/static/RAW2Compass-macos-arm64.zip`.
+Open the printed local URL. If the ZIP is present in `static/`, the RAW download link is served at `/app/static/RAW2Compass-macos-arm64.zip`. Otherwise, the page links to the GitHub Release asset.
 
 ## Deploy on Railway
 
@@ -38,7 +38,7 @@ The ZIP is over GitHub's 100 MiB single-file limit, so a normal GitHub repositor
 3. Run `railway up` to upload the local directory and deploy it.
 4. Confirm the page and the RAW ZIP link on the Railway domain.
 
-For GitHub-based automatic deployments, host the ZIP as a GitHub Release asset or in object storage. Set Railway's `RAW2COMPASS_DOWNLOAD_URL` environment variable to that public HTTPS asset URL, and exclude `static/RAW2Compass-macos-arm64.zip` from Git history. The page will use that URL instead of its bundled copy.
+For GitHub-based automatic deployments, the page uses the `RAW2Compass-macos-arm64.zip` asset from the `raw2compass-macos-arm64-2026-10-08` GitHub Release. The ZIP is excluded from Git history. Set Railway's optional `RAW2COMPASS_DOWNLOAD_URL` environment variable to a different public HTTPS asset URL if you need to replace the default.
 
 The app requires no API keys or database. Railway supplies `$PORT`; `railway.json` and `Procfile` bind Streamlit to it.
 

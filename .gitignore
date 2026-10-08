@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.DS_Store
+ceaenv/
+RAW2Compass.app/
+static/RAW2Compass-macos-arm64.zip

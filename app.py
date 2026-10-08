@@ -19,6 +19,10 @@ BACKGROUND_PATH = APP_DIR / "assets" / "compass-prep-background-4k.webp"
 RAW_ARCHIVE_NAME = "RAW2Compass-macos-arm64.zip"
 RAW_ARCHIVE_PATH = APP_DIR / "static" / RAW_ARCHIVE_NAME
 RAW_ARCHIVE_URL = f"/app/static/{RAW_ARCHIVE_NAME}"
+RELEASE_RAW_URL = (
+    "https://github.com/sasinha7290/COMPASSprep/releases/download/"
+    "raw2compass-macos-arm64-2026-10-08/RAW2Compass-macos-arm64.zip"
+)
 EXTERNAL_RAW_URL = os.getenv("RAW2COMPASS_DOWNLOAD_URL", "").strip()
 
 
@@ -39,13 +43,13 @@ background_uri = asset_data_uri(BACKGROUND_PATH, "image/webp")
 if EXTERNAL_RAW_URL and not EXTERNAL_RAW_URL.startswith("https://"):
     st.error("RAW2COMPASS_DOWNLOAD_URL must be an HTTPS URL.")
     st.stop()
-if not EXTERNAL_RAW_URL and not RAW_ARCHIVE_PATH.is_file():
-    st.error(f"The RAW-2-COMPASS download is missing: {RAW_ARCHIVE_NAME}")
-    st.stop()
-raw_download_url = escape(EXTERNAL_RAW_URL or RAW_ARCHIVE_URL, quote=True)
+raw_download_source = EXTERNAL_RAW_URL or (
+    RAW_ARCHIVE_URL if RAW_ARCHIVE_PATH.is_file() else RELEASE_RAW_URL
+)
+raw_download_url = escape(raw_download_source, quote=True)
 raw_download_attributes = (
     'target="_blank" rel="noopener noreferrer"'
-    if EXTERNAL_RAW_URL
+    if raw_download_source.startswith("https://")
     else f'download="{RAW_ARCHIVE_NAME}"'
 )
 raw_archive_size_mib = (

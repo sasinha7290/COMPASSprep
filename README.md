@@ -2,44 +2,48 @@
 
 A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data harmonization and preprocessing**.
 
-The live public-data pathway links to [GEO-2-COMPASS](https://geo2compass.precsn.com/). RAW-2-COMPASS is presented as future downloadable standalone software, with its download control intentionally disabled and marked **Coming Soon**.
+- **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
+- **RAW-2-COMPASS:** downloadable standalone application for macOS on Apple silicon. The supplied `RAW2Compass-macos-arm64.zip` is served directly from the landing page.
 
-## Included
+The page describes both routes in detail and includes the COMPASS website helper line.
 
-- `app.py` — the complete one-page Streamlit application
+## Files
+
+- `app.py` — the one-page Streamlit application
+- `static/RAW2Compass-macos-arm64.zip` — supplied desktop app archive, 144.5 MiB
 - `assets/compass-prep-background-4k.webp` — optimized 4K website background
 - `assets/compass-prep-background-4k.png` — full-quality 4K background
-- `assets/BACKGROUND_PROMPT.md` — the final background-generation prompt
-- `requirements.txt` — Python dependency declaration
-- `Procfile` — Railway-compatible process command
-- `railway.json` — Railway build, start, health-check, and restart settings
-- `runtime.txt` — Python runtime selection
-- `.streamlit/config.toml` — Streamlit theme and server settings
+- `.streamlit/config.toml` — Streamlit theme and static-file serving
+- `railway.json`, `Procfile`, `runtime.txt`, `requirements.txt` — Railway deployment files
+
+The ZIP contains `RAW2Compass.app`, a macOS arm64 executable. It does not include Windows or Intel Mac versions. The archive was validated with `unzip -t`; SHA-256: `8ec32dcfd052d07a30cf4676e71c9e68bf7dd02ff70cca6a7c04ae7`.
 
 ## Run locally
 
-Create and activate a Python virtual environment, then run:
-
 ```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Streamlit will print a local address. Open it in a browser.
+Open the printed local URL. The RAW download link is served at `/app/static/RAW2Compass-macos-arm64.zip`.
 
 ## Deploy on Railway
 
-1. Create a new Git repository containing the files in this folder.
-2. In Railway, choose **New Project → Deploy from GitHub repo** and select that repository.
-3. Railway will detect the Python app and use `railway.json`/`Procfile` to start Streamlit on the assigned `$PORT`.
-4. When deployment is healthy, open **Settings → Networking → Generate Domain**.
+The ZIP is over GitHub's 100 MiB single-file limit, so a normal GitHub repository push cannot carry this exact archive. To deploy the page **with the download bundled**, use Railway's local-directory deployment:
 
-No secrets or environment variables are required for this landing page.
+1. Keep `static/RAW2Compass-macos-arm64.zip` in this folder.
+2. From this folder, run `railway link` to select the intended Railway project and service.
+3. Run `railway up` to upload the local directory and deploy it.
+4. Confirm the page and the RAW ZIP link on the Railway domain.
 
-## Update later
+For GitHub-based automatic deployments, host the ZIP as a GitHub Release asset or in object storage. Set Railway's `RAW2COMPASS_DOWNLOAD_URL` environment variable to that public HTTPS asset URL, and exclude `static/RAW2Compass-macos-arm64.zip` from Git history. The page will use that URL instead of its bundled copy.
 
-When RAW-2-COMPASS is ready, replace the disabled button in `app.py` with a download link to the signed installer or release page. Keep installers outside the repository if they are large; a versioned release or object-storage URL is easier to maintain.
+The app requires no API keys or database. Railway supplies `$PORT`; `railway.json` and `Procfile` bind Streamlit to it.
 
-## Background asset
+## Content notes
 
-The background was generated specifically for this project using the built-in image-generation workflow, then upscaled to 3840×2160. The app embeds the optimized WebP locally, so it does not rely on an external image host.
+GEO-2-COMPASS capabilities are described from its project README. The RAW ZIP contains a packaged desktop app but no user guide, so the landing page states the confirmed platform and local workflow without claiming unverified input formats.
+
+The background was generated specifically for this project using the built-in image-generation workflow, then upscaled to 3840×2160. See `assets/BACKGROUND_PROMPT.md` for the prompt.

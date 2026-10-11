@@ -20,6 +20,8 @@ COMPASS_LOGO_PATH = APP_DIR / "assets" / "compass-logo.png"
 RAW_ARCHIVE_NAME = "RAW2Compass-macos-arm64.zip"
 RAW_ARCHIVE_PATH = APP_DIR / "static" / RAW_ARCHIVE_NAME
 RAW_ARCHIVE_URL = f"/app/static/{RAW_ARCHIVE_NAME}"
+RAW_GUIDE_NAME = "RAW-2-COMPASS-User-Guide_DRAFT1.pdf"
+RAW_GUIDE_URL = f"/app/static/{RAW_GUIDE_NAME}"
 RELEASE_RAW_URL = (
     "https://github.com/sasinha7290/COMPASSprep/releases/download/"
     "raw2compass-macos-arm64-2026-10-08/RAW2Compass-macos-arm64.zip"
@@ -477,6 +479,16 @@ st.html(
             line-height: 1.5;
         }}
 
+        .guide-link {{
+            display: inline-block;
+            margin-top: 14px;
+            color: #0d649c;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }}
+
         .path-details {{
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -755,6 +767,7 @@ st.html(
                     </div>
                     <a class="card-action" href="{raw_download_url}" {raw_download_attributes} type="application/zip">Download RAW-2-COMPASS ↓</a>
                     <small class="download-note">The ZIP contains a macOS arm64 app. Windows and Intel Mac builds are not included.</small>
+                    <a class="guide-link" href="{RAW_GUIDE_URL}" target="_blank" rel="noopener noreferrer" type="application/pdf">Read the RAW-2-COMPASS user guide (PDF) ↗</a>
                 </article>
             </div>
 
@@ -778,7 +791,7 @@ st.html(
                         <li>Open the local application and follow its on-screen workflow to prepare your data for COMPASS.</li>
                         <li>Save the prepared output locally, then use the compatible data in your COMPASS analysis.</li>
                     </ol>
-                    <p>This package contains only the macOS arm64 build. Input formats and processing options should be checked in the installed application before use; the archive does not include a user guide.</p>
+                    <p>This package contains only the macOS arm64 build. The PDF user guide explains app setup, FASTQ selection, pipeline steps, and where to find the output files.</p>
                 </article>
             </div>
         </section>

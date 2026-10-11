@@ -4,6 +4,7 @@ A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — dat
 
 - **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
 - **RAW-2-COMPASS:** downloadable standalone application for macOS on Apple silicon. The landing page links to the GitHub Release asset; a local copy of the ZIP is served directly when present.
+- **RAW-2-COMPASS user guide:** nine-page PDF available from the RAW-2-COMPASS card at `/app/static/RAW-2-COMPASS-User-Guide_DRAFT1.pdf`.
 
 The page describes both routes in detail and uses the COMPASS icon in its header.
 
@@ -11,6 +12,7 @@ The page describes both routes in detail and uses the COMPASS icon in its header
 
 - `app.py` — the one-page Streamlit application
 - `static/RAW2Compass-macos-arm64.zip` — supplied desktop app archive, 144.5 MiB
+- `static/RAW-2-COMPASS-User-Guide_DRAFT1.pdf` — downloadable user guide for the macOS app
 - `assets/compass-prep-background-4k.webp` — optimized 4K website background
 - `assets/compass-prep-background-4k.png` — full-quality 4K background
 - `assets/compass-logo.png` — COMPASS icon used in the header
@@ -45,6 +47,6 @@ The app requires no API keys or database. Railway supplies `$PORT`; `railway.jso
 
 ## Content notes
 
-GEO-2-COMPASS capabilities are described from its project README. The RAW ZIP contains a packaged desktop app but no user guide, so the landing page states the confirmed platform and local workflow without claiming unverified input formats.
+GEO-2-COMPASS capabilities are described from its project README. The RAW ZIP contains a packaged desktop app; the separate PDF guide explains installation, FASTQ input selection, pipeline operation, and output locations.
 
 The background was generated specifically for this project using the built-in image-generation workflow, then upscaled to 3840×2160. See `assets/BACKGROUND_PROMPT.md` for the prompt.

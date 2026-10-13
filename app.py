@@ -22,6 +22,7 @@ RAW_RELEASE_URL = (
     "https://github.com/poojabio/RAW-2-COMPASS/releases/download/"
     "v.05/RAW-2-COMPASS-macos.zip"
 )
+RAW_SOURCE_URL = "https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment"
 RAW_RELEASE_SIZE_MIB = 152574544 / (1024 * 1024)
 
 
@@ -41,6 +42,7 @@ st.set_page_config(
 background_uri = asset_data_uri(BACKGROUND_PATH, "image/webp")
 compass_logo_uri = asset_data_uri(COMPASS_LOGO_PATH, "image/png")
 raw_download_url = escape(RAW_RELEASE_URL, quote=True)
+raw_source_url = escape(RAW_SOURCE_URL, quote=True)
 
 st.html(
     f"""
@@ -459,6 +461,20 @@ st.html(
             line-height: 1.5;
         }}
 
+        .path-card .source-path-note {{
+            margin: 18px 0 0;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+            font-size: 13px;
+            line-height: 1.55;
+        }}
+
+        .source-path-note a {{
+            color: #0d649c;
+            font-weight: 750;
+            text-underline-offset: 3px;
+        }}
+
         .guide-link {{
             display: inline-block;
             margin-top: 14px;
@@ -749,6 +765,7 @@ st.html(
                     <small class="download-note">The ZIP is the prebuilt macOS app from the RAW-2-COMPASS v.05 release.</small>
                     <a class="guide-link" href="{RAW_GUIDE_URL}" target="_blank" rel="noopener noreferrer" type="application/pdf">Read the RAW-2-COMPASS user guide (PDF) ↗</a>
                     <small class="download-note">The guide shows the earlier ZIP filename; use the v.05 download above.</small>
+                    <p class="source-path-note">Want to run the pipeline from a terminal on your workstation or server? Download the source files and follow the environment setup and command-line instructions in the <a href="{raw_source_url}" target="_blank" rel="noopener noreferrer">RAW-2-COMPASS GitHub repository ↗</a>.</p>
                 </article>
             </div>
 

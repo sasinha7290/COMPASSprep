@@ -4,6 +4,7 @@ A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — dat
 
 - **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
 - **RAW-2-COMPASS:** downloadable standalone macOS application. The landing page links directly to the [v.05 GitHub Release asset](https://github.com/poojabio/RAW-2-COMPASS/releases/tag/v.05).
+- **RAW-2-COMPASS source pipeline:** the RAW card links to the [forked source repository and terminal setup instructions](https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment) for workstation or server use.
 - **RAW-2-COMPASS user guide:** nine-page PDF available from the RAW-2-COMPASS card at `/app/static/RAW-2-COMPASS-User-Guide_DRAFT1.pdf`.
 
 The page describes both routes in detail and uses the COMPASS icon in its header.

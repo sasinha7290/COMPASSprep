@@ -7,7 +7,6 @@ Run locally with:
 from __future__ import annotations
 
 import base64
-import os
 from html import escape
 from pathlib import Path
 
@@ -17,16 +16,13 @@ import streamlit as st
 APP_DIR = Path(__file__).resolve().parent
 BACKGROUND_PATH = APP_DIR / "assets" / "compass-prep-background-4k.webp"
 COMPASS_LOGO_PATH = APP_DIR / "assets" / "compass-logo.png"
-RAW_ARCHIVE_NAME = "RAW2Compass-macos-arm64.zip"
-RAW_ARCHIVE_PATH = APP_DIR / "static" / RAW_ARCHIVE_NAME
-RAW_ARCHIVE_URL = f"/app/static/{RAW_ARCHIVE_NAME}"
 RAW_GUIDE_NAME = "RAW-2-COMPASS-User-Guide_DRAFT1.pdf"
 RAW_GUIDE_URL = f"/app/static/{RAW_GUIDE_NAME}"
-RELEASE_RAW_URL = (
-    "https://github.com/sasinha7290/COMPASSprep/releases/download/"
-    "raw2compass-macos-arm64-2026-10-08/RAW2Compass-macos-arm64.zip"
+RAW_RELEASE_URL = (
+    "https://github.com/poojabio/RAW-2-COMPASS/releases/download/"
+    "v.05/RAW-2-COMPASS-macos.zip"
 )
-EXTERNAL_RAW_URL = os.getenv("RAW2COMPASS_DOWNLOAD_URL", "").strip()
+RAW_RELEASE_SIZE_MIB = 152574544 / (1024 * 1024)
 
 
 def asset_data_uri(path: Path, mime_type: str) -> str:
@@ -44,23 +40,7 @@ st.set_page_config(
 
 background_uri = asset_data_uri(BACKGROUND_PATH, "image/webp")
 compass_logo_uri = asset_data_uri(COMPASS_LOGO_PATH, "image/png")
-if EXTERNAL_RAW_URL and not EXTERNAL_RAW_URL.startswith("https://"):
-    st.error("RAW2COMPASS_DOWNLOAD_URL must be an HTTPS URL.")
-    st.stop()
-raw_download_source = EXTERNAL_RAW_URL or (
-    RAW_ARCHIVE_URL if RAW_ARCHIVE_PATH.is_file() else RELEASE_RAW_URL
-)
-raw_download_url = escape(raw_download_source, quote=True)
-raw_download_attributes = (
-    'target="_blank" rel="noopener noreferrer"'
-    if raw_download_source.startswith("https://")
-    else f'download="{RAW_ARCHIVE_NAME}"'
-)
-raw_archive_size_mib = (
-    RAW_ARCHIVE_PATH.stat().st_size / (1024 * 1024)
-    if RAW_ARCHIVE_PATH.is_file()
-    else 144.5
-)
+raw_download_url = escape(RAW_RELEASE_URL, quote=True)
 
 st.html(
     f"""
@@ -732,7 +712,7 @@ st.html(
             <p class="section-kicker">Choose your starting point</p>
             <h2 class="section-title">One preparation layer. Two routes into COMPASS.</h2>
             <p class="section-lede">
-                GEO-2-COMPASS is a web workflow for public datasets. RAW-2-COMPASS is a downloadable desktop application for custom data; the current package is for macOS on Apple silicon.
+                GEO-2-COMPASS is a web workflow for public datasets. RAW-2-COMPASS is a downloadable macOS desktop application for your own sequencing data.
             </p>
 
             <div class="path-grid">
@@ -758,16 +738,17 @@ st.html(
                     <h3>RAW-2-COMPASS</h3>
                     <div class="path-label">Your data · Standalone desktop app</div>
                     <p>
-                        Work with your own data in a local desktop application designed to prepare inputs for COMPASS. Download the Apple silicon macOS build as a ZIP archive containing RAW2Compass.app.
+                        Process your FASTQ reads locally to produce gene-level expression matrices for COMPASS. Download the current v.05 macOS app as a ZIP archive.
                     </p>
                     <div class="mini-list" aria-label="RAW-2-COMPASS download details">
-                        <span>macOS Apple silicon</span>
+                        <span>macOS · v.05</span>
                         <span>Local desktop workflow</span>
-                        <span>{raw_archive_size_mib:.1f} MiB ZIP</span>
+                        <span>{RAW_RELEASE_SIZE_MIB:.1f} MiB ZIP</span>
                     </div>
-                    <a class="card-action" href="{raw_download_url}" {raw_download_attributes} type="application/zip">Download RAW-2-COMPASS ↓</a>
-                    <small class="download-note">The ZIP contains a macOS arm64 app. Windows and Intel Mac builds are not included.</small>
+                    <a class="card-action" href="{raw_download_url}" target="_blank" rel="noopener noreferrer" type="application/zip">Download RAW-2-COMPASS v.05 ↓</a>
+                    <small class="download-note">The ZIP is the prebuilt macOS app from the RAW-2-COMPASS v.05 release.</small>
                     <a class="guide-link" href="{RAW_GUIDE_URL}" target="_blank" rel="noopener noreferrer" type="application/pdf">Read the RAW-2-COMPASS user guide (PDF) ↗</a>
+                    <small class="download-note">The guide shows the earlier ZIP filename; use the v.05 download above.</small>
                 </article>
             </div>
 
@@ -787,11 +768,11 @@ st.html(
                     <h3>What RAW-2-COMPASS provides</h3>
                     <p>Use this route for your own datasets rather than a public GEO accession. It is a separate desktop application, so the landing page does not upload or process your files.</p>
                     <ol>
-                        <li>Download the {raw_archive_size_mib:.1f} MiB ZIP on a Mac with Apple silicon and extract <strong>RAW2Compass.app</strong>.</li>
-                        <li>Open the local application and follow its on-screen workflow to prepare your data for COMPASS.</li>
-                        <li>Save the prepared output locally, then use the compatible data in your COMPASS analysis.</li>
+                        <li>Download and extract the {RAW_RELEASE_SIZE_MIB:.1f} MiB macOS ZIP from the v.05 release.</li>
+                        <li>In the app, choose a species and read type, select your FASTQ files, and run the pipeline.</li>
+                        <li>Find the CPM and log-CPM CSV matrices in the app's output folder for use with COMPASS.</li>
                     </ol>
-                    <p>This package contains only the macOS arm64 build. The PDF user guide explains app setup, FASTQ selection, pipeline steps, and where to find the output files.</p>
+                    <p>The PDF user guide explains app setup, FASTQ selection, pipeline steps, and where to find the output files.</p>
                 </article>
             </div>
         </section>

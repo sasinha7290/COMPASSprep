@@ -19,10 +19,10 @@ COMPASS_LOGO_PATH = APP_DIR / "assets" / "compass-logo.png"
 RAW_GUIDE_NAME = "RAW-2-COMPASS-User-Guide_DRAFT1.pdf"
 RAW_GUIDE_URL = f"/app/static/{RAW_GUIDE_NAME}"
 RAW_RELEASE_URL = (
-    "https://github.com/poojabio/RAW-2-COMPASS/releases/download/"
+    "https://github.com/sasinha7290/RAW-2-COMPASS/releases/download/"
     "v.05/RAW-2-COMPASS-macos.zip"
 )
-RAW_SOURCE_URL = "https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment"
+RAW_SOURCE_URL = "https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment-non-downloadable-local-instance"
 RAW_RELEASE_SIZE_MIB = 152574544 / (1024 * 1024)
 
 

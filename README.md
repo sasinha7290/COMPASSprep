@@ -3,8 +3,8 @@
 A desktop-first, responsive Streamlit landing page for **COMPASS Prep™ — data preparation for COMPASS**.
 
 - **GEO-2-COMPASS:** live web application for public NCBI GEO studies at <https://geo2compass.precsn.com/>.
-- **RAW-2-COMPASS:** downloadable standalone macOS application. The landing page links directly to the [v.05 GitHub Release asset](https://github.com/poojabio/RAW-2-COMPASS/releases/tag/v.05).
-- **RAW-2-COMPASS source pipeline:** the RAW card links to the [forked source repository and terminal setup instructions](https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment) for workstation or server use.
+- **RAW-2-COMPASS:** downloadable standalone macOS application. The landing page links directly to the [v.05 GitHub Release asset](https://github.com/sasinha7290/RAW-2-COMPASS/releases/tag/v.05) in sasinha7290/RAW-2-COMPASS, a fork synced with [poojabio/RAW-2-COMPASS](https://github.com/poojabio/RAW-2-COMPASS) on 17 November 2026, with its releases copied unchanged.
+- **RAW-2-COMPASS source pipeline:** the RAW card links to the [forked source repository and terminal setup instructions](https://github.com/sasinha7290/RAW-2-COMPASS#run-from-source-in-a-local-environment-non-downloadable-local-instance) for workstation or server use.
 - **RAW-2-COMPASS user guide:** nine-page PDF available from the RAW-2-COMPASS card at `/app/static/RAW-2-COMPASS-User-Guide_DRAFT1.pdf`.
 
 The page describes both routes in detail and uses the COMPASS icon in its header.
@@ -19,7 +19,7 @@ The page describes both routes in detail and uses the COMPASS icon in its header
 - `.streamlit/config.toml` — Streamlit theme and static-file serving
 - `railway.json`, `Procfile`, `runtime.txt`, `requirements.txt` — Railway deployment files
 
-The v.05 release asset is `RAW-2-COMPASS-macos.zip` (145.5 MiB; publisher-provided SHA-256: `16b5cde5fc5b3aacee0a745953a4625cc019007d5696ca0cfd70c4deb11810c5`). The PDF guide still shows the earlier ZIP filename, so the page directs readers to use the v.05 link.
+The v.05 release asset is `RAW-2-COMPASS-macos.zip` (145.5 MiB; SHA-256, identical in the poojabio original and the sasinha7290 copy: `16b5cde5fc5b3aacee0a745953a4625cc019007d5696ca0cfd70c4deb11810c5`). The PDF guide still shows the earlier ZIP filename, so the page directs readers to use the v.05 link.
 
 ## Run locally
 
@@ -34,7 +34,7 @@ Open the printed local URL. The RAW download button links to the v.05 release as
 
 ## Deploy on Railway
 
-The ZIP is over GitHub's 100 MiB single-file limit, so the app links to the publisher's v.05 GitHub Release asset instead of storing the ZIP in this repository. Railway deploys this page from GitHub; the PDF guide is included in `static/`.
+The ZIP is over GitHub's 100 MiB single-file limit, so the app links to the v.05 GitHub Release asset in sasinha7290/RAW-2-COMPASS instead of storing the ZIP in this repository. Railway deploys this page from GitHub; the PDF guide is included in `static/`.
 
 The app requires no API keys or database. Railway supplies `$PORT`; `railway.json` and `Procfile` bind Streamlit to it.
 
